@@ -10,7 +10,7 @@ seeds_ranges_s = seeds[:len(seeds):2]
 seeds_ranges_e = seeds[1:len(seeds):2]
 seeds_ranges = list(zip(seeds_ranges_s,seeds_ranges_e))
 for i, x in enumerate(seeds_ranges):
-    seeds_ranges[i] = (x[0], x[0] + x[1] - 1)
+    seeds_ranges[i] = (x[0], x[0] + x[1])
 print(seeds_ranges)
 
 one_map = []
@@ -67,27 +67,27 @@ for seed_range in seeds_ranges:
                 source = conversions[1]
                 r = conversions[2]
                 converter = dest - source
-                if source <= items[0] <= source +r - 1:
-                    if items[1] <= source + r - 1:
+                if source <= items[0] < source +r:
+                    if items[1] < source + r:
                         #print("all copied",  ((converter + items[0]), (converter + items[1])) )
                         tmp_item_ranges.append( ((converter + items[0]), (converter + items[1])) )
                         break
                     else:
-                        tmp_item_ranges.append( ((converter + items[0]), (converter + source + r -1)))
-                        item_queue.append(((source + r), items[1]))
+                        tmp_item_ranges.append( ((converter + items[0]), (converter + source + r)))
+                        item_queue.append(((source + r + 1), items[1]))
                         break
-                elif source <= items[1] <= source + r - 1:
+                elif source <= items[1] < source + r:
                     #print("From behind")
                     #print((items[0], source - 1))
                     #print((converter + source), (converter + items[1]))
-                    item_queue.append(((items[0], source - 1)))
+                    item_queue.append(((items[0], source)))
                     tmp_item_ranges.append(((converter + source), (converter + items[1])))
                     break
-                elif items[0] <= source <= items[1] and source + r - 1 <= items[1]:
+                elif items[0] <= source < items[1] and source + r < items[1]:
                     print("\n\n\n\n\n\n")
-                    item_queue.append((items[0], source - 1))
-                    item_queue.append((source + r, items[1]))
-                    tmp_item_ranges.append(((converter + source), (converter + source + r - 1)))
+                    item_queue.append((items[0], source ))
+                    item_queue.append((source + r , items[1]))
+                    tmp_item_ranges.append(((converter + source), (converter + source + r)))
             #If items doesnt get changed
             else:
                 print("unchanged")
