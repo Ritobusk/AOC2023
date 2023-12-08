@@ -1,15 +1,6 @@
-f = open("in.in").readlines()
+f = open("test3.in").readlines()
 
 instructions = f[0].strip()
-
-class node:
-    def __init__(self, left, right, name):
-        self.left = left
-        self.right = right
-        self.name = name
-
-    def PrintName(self):
-        print(self.data)
 
 nodes = {}
 for line in f[2:]:
@@ -17,7 +8,7 @@ for line in f[2:]:
     rest = rest.strip().split(", ")
     left = rest[0][1:len(rest[0])]
     right = rest[1][:len(rest[1]) - 1]
-    nodes[name] = node(left, right, name)
+    nodes[name] = [left, right]
 
 cond = True
 curr_nodes_keys = list(filter(lambda x: x[-1] == 'A', nodes.keys()))
@@ -32,11 +23,11 @@ while cond:
         next_nodes = []
         if instruction == 'L':
             for c_n in curr_nodes: 
-                next_nodes.append(nodes[c_n.left])
+                next_nodes.append(nodes[c_n[0]])
 
         else:
             for c_n in curr_nodes: 
-                next_nodes.append(nodes[c_n.right])
+                next_nodes.append(nodes[c_n[1]])
         steps += 1
         end_ghost_nodes = [x for x in next_nodes if x.name[-1] == 'Z']
         #if len(end_ghost_nodes) > 1:
