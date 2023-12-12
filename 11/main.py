@@ -1,5 +1,5 @@
 import re
-space =  open("test.in").readlines()
+space =  open("in.in").readlines()
 
 gals = []
 
@@ -23,26 +23,24 @@ for r in range(max_row[0]):
 for c in range(max_col[1]):
     if all([c != x[1] for x in gals]):
         empty_cols.append(c)
-print(empty_rows, empty_cols)
 new_gal = [x for x in gals]
 for x in empty_rows:
     for idx, g in enumerate(gals):
         if x < g[0]:
-            new_gal[idx] = (new_gal[idx][0] + 1, new_gal[idx][1]) 
+            new_gal[idx] = (new_gal[idx][0] + 999_999, new_gal[idx][1]) 
 
 for x in empty_cols:
     for idx, g in enumerate(gals):
         if x < g[1]:
-            new_gal[idx] = (new_gal[idx][0], new_gal[idx][1] + 1) 
-print(new_gal)
+            new_gal[idx] = (new_gal[idx][0], new_gal[idx][1] + 999_999) 
 
 def manhattandist(x, y):
-    return abs(x[0]-x[1]) + abs(y[0] - y[1])
+    return abs(x[0]-y[0]) + abs(x[1] - y[1])
 
 sum_of_mins = 0
-for g in new_gal:
-    dists = list(map(lambda x: manhattandist(g, x) if x != g else 1_000_000, new_gal))
-    print(dists, min(dists))
-    sum_of_mins += min(dists)
+for i, g in enumerate(new_gal):
+    dists = list(map(lambda x: manhattandist(g, x) if x != g else 1_000_000_000_000, new_gal))
+    #print(dists, min(dists))
+    sum_of_mins += sum(dists[i+1:])
 print(sum_of_mins)
 
